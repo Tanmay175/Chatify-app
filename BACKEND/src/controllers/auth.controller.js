@@ -46,7 +46,7 @@ export const signup = async(req,res)=>{
                 _id:newuser._id,
                 fullname:newuser.fullname,
                 email:newuser.email,
-                profilepic:newuser.profilepic
+                profilePic:newuser.profilePic
             })
 
             //todo: send welcome email to user
@@ -86,11 +86,11 @@ export const login =async(req,res)=>{
         generateToken(user._id,res)
         
         res.status(200).json({
-            _id:user.id,
-            fullname:user.fullname,
-            email:user.email,
-            profilepic:user.profilepic
-        })
+    _id:user.id,
+    fullname:user.fullname,
+    email:user.email,
+    profilePic:user.profilePic
+})
 
     } catch (error) {
         console.error("Error in login controller:",error)
@@ -103,24 +103,34 @@ export const logout =async(_,res)=>{
     res.status(200).json({message:"logged out successfully"})
 }
 
-export const updateprofile= async(req,res)=>{
-    try{
-        const{profilepic}=req.body;
-        if(!profilepic) return res.status(400).json({message:"Profile pic is required"})
+export const updateprofile = async (req, res) => {
+  try {
+    const { profilePic } = req.body;
 
-        const userid=req.user._id 
-        
-        const uploadresponse=await cloudinary.uploader.upload(profilepic)
-
-        const updateduser = await usermodel.findByIdAndUpdate(userid,
-            {profilepic:uploadresponse.secure_url},
-            {new:true})
-
-        res.status(200).json(updateduser)    
+    if (!profilePic) {
+      return res.status(400).json({ message: "Profile pic is required" });
     }
-    catch(error){
-        console.log("Error in update profile")
-        res.status(500).json({message:"Internal server error"})
-    }
-}
+
+    const userid = req.user._id;
+
+    const uploadresponse = await cloudinary.uploader.upload(profilePic);
+
+    const updateduser = await usermodel.findByIdAndUpdate(
+      userid,
+      { profilePic: uploadresponse.secure_url },
+      { new: true }
+    );
+
+    res.status(200).json({
+      _id: updateduser._id,
+      fullname: updateduser.fullname,
+      email: updateduser.email,
+      profilePic: updateduser.profilePic
+    });
+
+  } catch (error) {
+    console.log("Error in update profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
