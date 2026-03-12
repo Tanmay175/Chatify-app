@@ -12,7 +12,7 @@ export const signup = async(req,res)=>{
             return res.status(400).json({message:"All fields are required"})
         }
         
-        if(password.lemgth<6){
+        if(password.length<6){
             return res.status(400).json({message:"Password must be atleast 6 characters"})         
         }
 
@@ -130,6 +130,23 @@ export const updateprofile = async (req, res) => {
 
   } catch (error) {
     console.log("Error in update profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+export const checkAuth = async (req, res) => {
+  try {
+    const user = req.user;
+
+    res.status(200).json({
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      profilePic: user.profilePic
+    });
+
+  } catch (error) {
+    console.log("Error in checkAuth:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
