@@ -1,7 +1,7 @@
 import { XIcon } from "lucide-react";
-import { useChatStore } from "../store/useChatStore";
+import { useChatStore } from "../store/useChatStore.js";
 import { useEffect } from "react";
-import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../store/useAuthStore.js";
 
 function ChatHeader() {
   const { selectedUser, setSelectedUser } = useChatStore();
