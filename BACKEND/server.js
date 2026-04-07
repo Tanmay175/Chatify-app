@@ -34,14 +34,3 @@ app.listen(PORT, () => {
    console.log(`Server running on port ${PORT}`);
 });
 
-// import express from "express";
-
-// const app = express();
-
-// app.get("/", (req,res)=>{
-//     res.send("Server working");
-// });
-
-// app.listen(4000, ()=>{
-//     console.log("Server running on port 4000");
-// });
